@@ -94,6 +94,7 @@ Murs : #
 */
 
 int main() {
+
     Mur m;
     Tresor t(50);
     Monstre mon(100);
