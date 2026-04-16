@@ -5,7 +5,7 @@ projet c++
 
 JIHEN 
 
-- Ensmeble des classes Case ( Mur, Passage, Tresor, Monstre, Piege)
+- Ensmeble des classes Case (Mur, Passage, Tresor, Monstre, Piege)
 - Classe aventurier et affichage ASCII
 
 POLA 
