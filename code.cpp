@@ -81,7 +81,11 @@ public :
     void afficher () ;
     vector < pair < int , int > > trouverChemin ( /* ...  ) ;
 };  
-*/  
+*/ 
+
+// A ajouter a la classe donjon
+
+
 
 /* Affichage ASCII du donjon :
 
@@ -93,8 +97,44 @@ Murs : #
 
 */
 
-int main() {
+/* Info aventurier pour la boucle du jeu
 
+Postion : (12, 9)
+Sante (pv) : 100/100
+Inventaire : 2 tresors
+Distance a la sortie : 23 cases 
+*/
+
+class Aventurier {
+private:
+    int x, y;         
+    int pv;          
+    int nbTresors;     
+
+public:
+    Aventurier() {}
+
+    void deplacer(int nx, int ny){
+        x = nx;
+        y = ny;
+    }
+
+    bool estVivant() const {
+        return pv > 0;
+    }
+
+    void afficherStatut() const {
+        pos
+        pv 
+        tresor 
+
+    }
+    int getX() const { return x; }
+    int getY() const { return y; }
+
+};
+
+int main() {
     Mur m;
     Tresor t(50);
     Monstre mon(100);
