@@ -9,7 +9,7 @@ private :
 
 public:
     Piege(int d = 10) : degats(d) {}
-    char afficher() const override {
+    char afficher() override {
         return 'T';
     }
 

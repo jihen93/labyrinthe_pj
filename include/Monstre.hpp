@@ -9,7 +9,7 @@ private:
 
 public:
     Monstre(int p = 20) : pv(p) {}
-    char afficher() const override {
+    char afficher() override {
         return 'M';
     }
 

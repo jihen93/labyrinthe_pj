@@ -1,11 +1,11 @@
-#include "CaseFactory.hpp"
-#include "Mur.hpp"
-#include "Monstre.hpp"
-#include "Piege.hpp"
-#include "Tresor.hpp"
-#include "Passage.hpp"
+#include "../include/CaseFactory.hpp"
+#include "../include/Mur.hpp"
+#include "../include/Monstre.hpp"
+#include "../include/Piege.hpp"
+#include "../include/Tresor.hpp"
+#include "../include/Passage.hpp"
 
-static void* CaseFactory::creerCase(enum TypeCase t) { // creercase retourne donc un pointeur qui contient un objet d'une classe
+void* CaseFactory::creerCase(enum TypeCase t) { // creercase retourne donc un pointeur qui contient un objet d'une classe
     switch(t) {
         case MUR: {
             Mur* mur = new Mur();

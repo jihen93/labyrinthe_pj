@@ -4,7 +4,7 @@
 class Passage : public Case { 
 public: 
     Passage () = default;
-    char afficher() const override {
+    char afficher() override {
         return ' ';
     }
 };

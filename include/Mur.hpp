@@ -6,7 +6,7 @@
 class Mur : public Case { 
 public : 
     Mur () = default; // rien à initialiser ici
-    char afficher() const override {
+    char afficher() override {
         return '#';
     }
 };

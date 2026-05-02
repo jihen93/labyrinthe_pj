@@ -10,7 +10,7 @@ private:
 public:
     Tresor(int v = 10) : valeur(v) {} // constructeur
     
-    char afficher() const override { // implémentation de la méthode virtuelle pure
+    char afficher() override { // implémentation de la méthode virtuelle pure
         return '+';
     }
 
