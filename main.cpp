@@ -1,8 +1,11 @@
-#include "Donjon.hpp"
-#include "Mur.hpp"
-#include "Tresor.hpp"
-#include "Monstre.hpp"
+#include "include/Donjon.hpp"
+#include "include/Mur.hpp"
+#include "include/Tresor.hpp"
+#include "include/Monstre.hpp"
 #include <iostream>
+#include <utility> // Pas oublier, sinon le main ne renvoie rien !
+
+using namespace std;
     
 int main() {
 
@@ -13,10 +16,10 @@ int main() {
     //donjon.generer(20,20);
     //donjon.afficher();
 
-    //cout << "Affichage des cases test :" << endl;
-    //cout << "Mur : " << m.afficher() << endl;
-    //cout << "Tresor : " << t.afficher() << " (Valeur: " << t.getValeur() << ")" << endl;
-    //cout << "Monstre : " << mon.afficher() << " (PV: " << mon.getPv() << ")" << endl;
+    cout << "Affichage des cases test :" << endl;
+    cout << "Mur : " << m.afficher() << endl;
+    cout << "Tresor : " << t.afficher() << " (Valeur: " << t.getValeur() << ")" << endl;
+    cout << "Monstre : " << mon.afficher() << " (PV: " << mon.getPv() << ")" << endl;
     
     return 0;
 }
