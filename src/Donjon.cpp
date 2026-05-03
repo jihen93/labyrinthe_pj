@@ -4,7 +4,6 @@
 #include "../include/GenerateurDeLabyrinthe.hpp"
 #include "CaseFactory.cpp"
 
-
 #include <vector>
 using namespace std;
 
@@ -13,8 +12,14 @@ void Donjon::set_case(int x, int y, Case* newCase) {
     grille[x][y] = newCase;
 }
 
-void Donjon::generer(int largeur, int hauteur) {
+void Donjon::set_visite(int x, int y, bool valeur) {
+    //delete visite[x][y];
+    visite[x][y] = valeur;
+}
+
+void Donjon::generer() {
     grille.resize(hauteur, vector<Case*>(largeur, nullptr)); // obligatoire sinon durant l'execution : Segmentation fault (core dumped)
+    visite.resize(hauteur, vector<bool>(largeur, false)); // Initialise à false
     for(int i = 0; i < hauteur; i++) {
         for(int j = 0; j < largeur; j++) {
             grille[i][j] = static_cast<Case*>(CaseFactory::creerCase(MUR)); // static_cast : void* vers case* // initialiser par des murs

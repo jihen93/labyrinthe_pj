@@ -3,35 +3,41 @@
 #include "../include/CaseFactory.hpp"
 
 #include <vector>  
-#include <algorithm> // indispensable pour shuffle
-#include <random>  // indispensable pour shuffle
+#include <cstdlib>  // Pour rand() et srand()
+#include <ctime>    // Pour time()
 using namespace std;
 
 void GenerateurDeLabyrinthe::initialiserGrille(Donjon &donjon) {
-    genererLabyrinthe(donjon, 1, 1);
+    srand(time(0)); // Initialise une seule fois
+    genererLabyrinthe(donjon, 1, 1);    
 }
 
 void GenerateurDeLabyrinthe::genererLabyrinthe (Donjon &donjon, int x, int y) { // etat actuel
-    //char visit[20][20];
-    //visit[x][y] = "visite"; // Tableau de caractères
-    static bool visite[20][20] = {false};  // Initialisé les cases visitées à false
-    visite[x][y] = true;  // Marquer la case actuelle comme visitée
-    vector<pair<int, int>> directions = {{0, +2}, {0, -2}, {+2, 0}, {-2, 0}}; // Tableau de caractères : Nord, Sud, Est, Ouest et on regarde 2 cases en avant
-    
-    // https://en.cppreference.com/cpp/algorithm/random_shuffle // std::random_shuffle is deprecated
-    random_device rd;
-    mt19937 g(rd());
-    shuffle(directions.begin(), directions.end(), g);
+    int hauteur = donjon.get_hauteur();
+    int largeur = donjon.get_largeur();
 
-    for (const auto &dir : directions) {
-        int nx = x + dir.first;
-        int ny = y + dir.second;
+    donjon.set_visite(x, y, true);  // Marquer la case actuelle comme visitée // MAIS case (0,0) jamais visité ??
+    int dir[4][2] = {{0, +2}, {0, -2}, {+2, 0}, {-2, 0}}; // Tableau 2D de directions : Nord, Sud, Est, Ouest et on regarde 2 cases en avant
+    
+    // mélange(directions)
+    for (int i = 3; i >= 0; i--) { //selon algo de Fisher-Yates
+        int r = rand() % (i + 1);  // nb aléatoire entre 0 et i
+        for (int j = 0; j < 2; j++) { //col
+            swap(dir[i][j], dir[r][j]); 
+        }
+    }
+
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dir[i][0];
+        int ny = y + dir[i][1];
+        //debug
+        cout << "nx: " << nx << ", ny: " << ny << endl;
         
-        if (nx >= 1 && nx < donjon.get_hauteur() - 1 && ny >= 1 && ny < donjon.get_largeur() - 1 && !visite[nx][ny]) {
+        if (nx > 0 && nx < hauteur-1 && ny > 0 && ny < largeur-1 && !donjon.get_visite(nx,ny)) { // de 1 à 19 ?? (visit(20, 20))
+            cout << "nx_valid: " << nx << ", ny_valid: " << ny << endl;
             // Casser le mur entre (x,y) et (nx,ny)
             donjon.set_case((x + nx) / 2, (y + ny) / 2, static_cast<Case*>(CaseFactory::creerCase(PASSAGE)));
             genererLabyrinthe(donjon, nx, ny); // recursif
-            }
+        }
     }
-
 }

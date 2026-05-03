@@ -16,7 +16,7 @@ int main() {
     Tresor t(50);
     Monstre mon(100);
     Donjon donjon;
-    donjon.generer(20,20);
+    donjon.generer();
     donjon.afficher(); // fonctionne
 
     //cout << "Affichage des cases test :" << endl;
