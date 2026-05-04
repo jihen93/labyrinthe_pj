@@ -8,10 +8,7 @@ private :
     int degats;
 
 public:
-    Piege(int d = 10) : degats(d) {}
-    char afficher() override {
-        return 'T';
-    }
-
-    int getDegats() const { return degats; }
+    Piege(int d = 10);
+    char afficher() override;
+    int getDegats() const;
 };

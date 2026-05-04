@@ -8,10 +8,7 @@ private:
     int pv;
 
 public:
-    Monstre(int p = 20) : pv(p) {}
-    char afficher() override {
-        return 'M';
-    }
-
-    int getPv() const { return pv; }
+    Monstre(int p = 20);
+    char afficher() override;
+    int getPv() const;
 };
