@@ -5,8 +5,9 @@ projet c++
 
 JIHEN 
 
-- Ensmeble des classes Case (Mur, Passage, Tresor, Monstre, Piege)
+- Ensemble des classes Case (Mur, Passage, Tresor, Monstre, Piege)
 - Classe aventurier et affichage ASCII
+- main (code cpp restructuré par Cyril)
 
 POLA 
 
@@ -15,5 +16,7 @@ POLA
 
 CYRIL
 
+- Structure compilation header (include et src)
 - Case Factory (fabric objet)
+- Generateur de labyrinthe
 - PATH FINDING
