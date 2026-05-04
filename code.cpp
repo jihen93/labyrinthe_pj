@@ -74,15 +74,6 @@ public:
     int getDegats() const { return degats; }
 };
 
-/*class Donjon {
-    vector < vector < Case * > > grille ;
-public :
-    void generer ( int largeur , int hauteur ) ;
-    void afficher () ;
-    vector < pair < int , int > > trouverChemin ( /* ...  ) ;
-};  
-*/ 
-
 // A ajouter a la classe donjon
 
 
@@ -112,7 +103,7 @@ private:
     int nbTresors;     
 
 public:
-    Aventurier() {}
+    Aventurier(int startX = 1, int startY = 1) : x(startX), y(startY), pv(100), nbTresors(0) {}
 
     void deplacer(int nx, int ny){
         x = nx;
@@ -124,18 +115,89 @@ public:
     }
 
     void afficherStatut() const {
-        pos
-        pv 
-        tresor 
-
+        std::cout << "Position : (" << x << ", " << y << ")" << std::endl;
+        std::cout << "Sante    : " << pv << " PV" << std::endl;
+        std::cout << "Tresors  : " << nbTresors << std::endl;
     }
+
+    void modifierPV(int delta) { pv += delta; }
+    void ajouterTresor() { nbTresors++; }
+
     int getX() const { return x; }
     int getY() const { return y; }
-
 };
 
+
+class Donjon {
+private:
+    vector<vector<Case*>> grille;
+    int largeur, hauteur;
+
+public:
+    // Initialise une grille vide pour le test
+    void generer(int l, int h) {
+        largeur = l;
+        hauteur = h;
+        grille.assign(hauteur, vector<Case*>(largeur, nullptr));
+        for (int i = 0; i < hauteur; ++i) {
+            for (int j = 0; j < largeur; ++j) {
+                grille[i][j] = new Passage(); // On met des passages partout pour tester
+            }
+        }
+    }
+
+    // Fonction d'affichage basique
+    void afficher(const Aventurier& adv) {
+        for (int i = 0; i < hauteur; ++i) {
+            for (int j = 0; j < largeur; ++j) {
+                if (i == adv.getY() && j == adv.getX()) cout << "@";
+                else cout << grille[i][j]->afficher();
+            }
+            cout << endl;
+        }
+        adv.afficherStatut();
+    }
+
+    // Pour que ton main sache si on peut bouger (Exigence 3.5)
+    bool estFranchissable(int x, int y) {
+        if (x < 0 || x >= largeur || y < 0 || y >= hauteur) return false;
+        return grille[y][x]->afficher() != '#'; // Vrai si ce n'est pas un mur
+    }
+
+    // Pour que resoudreCase puisse agir
+    Case* getCase(int x, int y) {
+        return grille[y][x];
+    }
+};
+
+void resoudreCase(Aventurier& adv, Case* c) {
+    if (!c) return;
+
+    char symbole = c->afficher();
+
+    if (symbole == '+') { 
+        std::cout << "[!] TRESOR ! Vous le ramassez." << std::endl;
+        adv.ajouterTresor();
+    } 
+    else if (symbole == 'T') { 
+        std::cout << "[!] CLIC... Un PIEGE ! -15 PV." << std::endl;
+        adv.modifierPV(-15);
+    } 
+    else if (symbole == 'M') { 
+        char choix;
+        cout << "[!] MONSTRE ! (c)ombattre ou (f)uir ? ";
+        cin >> choix;
+        if (choix == 'c') {
+            adv.modifierPV(-25); //
+            cout << "Victoire, mais vous etes blesse." << endl;
+        } else {
+            cout << "Vous fuyez prudemment." << endl;
+        }
+    }
+}
+/*
 int main() {
-    Mur m;
+   Mur m;
     Tresor t(50);
     Monstre mon(100);
 
@@ -144,5 +206,42 @@ int main() {
     cout << "Tresor : " << t.afficher() << " (Valeur: " << t.getValeur() << ")" << endl;
     cout << "Monstre : " << mon.afficher() << " (PV: " << mon.getPv() << ")" << endl;
 
+    return 0;
+
+    
+}*/
+
+int main() {
+    Donjon monDonjon;
+    monDonjon.generer(20, 10);
+    
+    Aventurier joueur(1, 1);
+    char commande;
+
+    while (joueur.estVivant()) {
+        monDonjon.afficher(joueur); 
+
+        cout << "\nAction (z:haut, s:bas, q:gauche, d:droite, x:quitter) : ";
+        cin >> commande;
+
+        if (commande == 'x') break;
+
+        int nx = joueur.getX();
+        int ny = joueur.getY();
+
+        if (commande == 'z') ny--;
+        else if (commande == 's') ny++;
+        else if (commande == 'q') nx--;
+        else if (commande == 'd') nx++;
+
+        if (monDonjon.estFranchissable(nx, ny)) {
+            joueur.deplacer(nx, ny);
+            resoudreCase(joueur, monDonjon.getCase(nx, ny));
+        } else {
+            cout << "Mur !" << endl;
+        }
+    }
+
+    if (!joueur.estVivant()) cout << "Mort..." << endl;
     return 0;
 }
