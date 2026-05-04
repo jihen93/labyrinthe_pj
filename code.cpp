@@ -207,6 +207,7 @@ int main() {
     cout << "Monstre : " << mon.afficher() << " (PV: " << mon.getPv() << ")" << endl;
 
     return 0;
+<<<<<<< HEAD
 
     
 }*/
