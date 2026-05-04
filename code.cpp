@@ -146,7 +146,6 @@ public:
         }
     }
 
-    // Fonction d'affichage basique
     void afficher(const Aventurier& adv) {
         for (int i = 0; i < hauteur; ++i) {
             for (int j = 0; j < largeur; ++j) {
@@ -158,13 +157,11 @@ public:
         adv.afficherStatut();
     }
 
-    // Pour que ton main sache si on peut bouger (Exigence 3.5)
     bool estFranchissable(int x, int y) {
         if (x < 0 || x >= largeur || y < 0 || y >= hauteur) return false;
         return grille[y][x]->afficher() != '#'; // Vrai si ce n'est pas un mur
     }
 
-    // Pour que resoudreCase puisse agir
     Case* getCase(int x, int y) {
         return grille[y][x];
     }
@@ -207,7 +204,6 @@ int main() {
     cout << "Monstre : " << mon.afficher() << " (PV: " << mon.getPv() << ")" << endl;
 
     return 0;
-<<<<<<< HEAD
 
     
 }*/
