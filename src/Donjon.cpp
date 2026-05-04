@@ -2,6 +2,7 @@
 #include "../include/Donjon.hpp"
 #include "../include/GenerateurDeLabyrinthe.hpp"
 #include "../include/CaseFactory.hpp"
+#include "../include/Aventurier.hpp"
 
 #include <vector>
 using namespace std;
@@ -21,16 +22,21 @@ void Donjon::generer() {
     visite.resize(hauteur, vector<bool>(largeur, false)); // Initialise à false
     for(int i = 0; i < hauteur; i++) {
         for(int j = 0; j < largeur; j++) {
-            grille[i][j] = static_cast<Case*>(CaseFactory::creerCase(MUR)); // static_cast : void* vers case* // initialiser par des murs
+            grille[i][j] = CaseFactory::creerCase(MUR); // static_cast : void* vers case* // initialiser par des murs
         }
     }
     GenerateurDeLabyrinthe::initialiserGrille(*this); // démarrer à la case (1,1)
 }
 
-void Donjon::afficher() {
-    for (auto &ligne : grille) {          // Pour chaque ligne de grille (ligne est une référence vers une ligne courante de la grille) // auto permet de déduire le type automatiquement
-        for (Case* c : ligne) {           // Pour chaque case
-            cout << c->afficher(); // équivalent à (*c).afficher()
+void Donjon::afficher(Aventurier& adv) {
+    for (int i = 0; i < hauteur; i++) {
+        for (int j = 0; j < largeur; j++) {
+            // Si les coordonnées correspondent à la position du joueur
+            if (adv.getX() == j && adv.getY() == i) {
+                cout << "@"; 
+            } else {
+                cout << grille[i][j]->afficher();
+            }
         }
         cout << endl;
     }

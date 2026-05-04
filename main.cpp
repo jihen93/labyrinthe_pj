@@ -45,7 +45,7 @@ int main() {
     char commande;
 
     while (joueur.estVivant()) {
-        monDonjon.afficher(); 
+        monDonjon.afficher(joueur); 
 
         cout << "\nAction (z:haut, s:bas, q:gauche, d:droite, x:quitter) : ";
         cin >> commande;

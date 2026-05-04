@@ -4,6 +4,8 @@
 #include <vector>  
 using namespace std;
 
+class Aventurier;
+
 class Donjon {
     // Explications perso :
     // grille est un tableau dynamique de lignes (vector<vector<Case*>>)
@@ -25,7 +27,7 @@ public :
     void poserSortie();
 
     void generer () ;
-    void afficher () ;
+    void afficher (Aventurier& adv) ;
 
     bool estFranchissable(int x, int y);
     Case* getCase(int x, int y);
