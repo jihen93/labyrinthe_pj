@@ -1,4 +1,5 @@
 #pragma once
+#include "Case.hpp" 
 
 enum TypeCase {
     MUR,
@@ -12,5 +13,5 @@ enum TypeCase {
 
 class CaseFactory {
 public:
-    static void* creerCase(enum TypeCase t);
+    static Case* creerCase(TypeCase t); 
 };

@@ -1,8 +1,7 @@
 #include <iostream>
 #include "../include/Donjon.hpp"
-#include "../include/CaseFactory.hpp"
 #include "../include/GenerateurDeLabyrinthe.hpp"
-#include "CaseFactory.cpp"
+#include "../include/CaseFactory.hpp"
 
 #include <vector>
 using namespace std;

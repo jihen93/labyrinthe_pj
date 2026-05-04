@@ -5,7 +5,7 @@
 #include "../include/Tresor.hpp"
 #include "../include/Passage.hpp"
 
-void* CaseFactory::creerCase(enum TypeCase t) { // creercase retourne donc un pointeur qui contient un objet d'une classe
+Case* CaseFactory::creerCase(enum TypeCase t) { // creercase retourne donc un pointeur qui contient un objet d'une classe
     switch(t) {
         case MUR: {
             Mur* mur = new Mur();

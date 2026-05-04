@@ -33,30 +33,3 @@ void Aventurier::ajouterTresor() {
 
 int Aventurier::getX() const { return x; }
 int Aventurier::getY() const { return y; }
-
-
-void resoudreCase(Aventurier& adv, Case* c) {
-    if (!c) return;
-
-    char symbole = c->afficher();
-
-    if (symbole == '+') { 
-        std::cout << "[!] TRESOR ! Vous le ramassez." << std::endl;
-        adv.ajouterTresor();
-    } 
-    else if (symbole == 'T') { 
-        std::cout << "[!] CLIC... Un PIEGE ! -15 PV." << std::endl;
-        adv.modifierPV(-15);
-    } 
-    else if (symbole == 'M') { 
-        char choix;
-        cout << "[!] MONSTRE ! (c)ombattre ou (f)uir ? ";
-        cin >> choix;
-        if (choix == 'c') {
-            adv.modifierPV(-25); //
-            cout << "Victoire, mais vous etes blesse." << endl;
-        } else {
-            cout << "Vous fuyez prudemment." << endl;
-        }
-    }
-}
