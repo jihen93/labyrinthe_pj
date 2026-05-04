@@ -26,6 +26,9 @@ public :
 
     void generer () ;
     void afficher () ;
+
+    bool estFranchissable(int x, int y);
+    Case* getCase(int x, int y);
     //vector < pair < int , int > > trouverChemin ( /* ...  */) ;
 };  
 

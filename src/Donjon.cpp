@@ -36,4 +36,13 @@ void Donjon::afficher() {
         cout << endl;
     }
 }
+
+bool Donjon::estFranchissable(int x, int y) {
+    if (x < 0 || x >= largeur || y < 0 || y >= hauteur) return false;
+    return grille[y][x]->afficher() != '#'; 
+}
+
+Case* Donjon::getCase(int x, int y) {
+    return grille[y][x];
+}
     
