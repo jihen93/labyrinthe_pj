@@ -20,6 +20,9 @@ public:
 
     void modifierPV(int delta);
     void ajouterTresor();
+
+    int getNbTresors() const { return nbTresors; }
+    
     int getX() const;
     int getY() const;
 };

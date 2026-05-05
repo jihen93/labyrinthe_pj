@@ -2,7 +2,10 @@
 #include "Case.hpp"
 
 class Passage : public Case { 
+private:
+    char symbole = ' ';
 public: 
-    Passage () = default;
+    Passage();
+    Passage(char s);
     char afficher() override;
 };

@@ -31,11 +31,11 @@ Case* CaseFactory::creerCase(enum TypeCase t) { // creercase retourne donc un po
             Sol* sol = new Sol();
             return sol;
         }
-        case PORTE: {
-            Porte* porte = new Porte();
-            return porte;
-        }
         */
+        case PORTE: {
+            return new Passage('S');
+        }
+
         default:
             return nullptr; // Gestion d'erreur si nécessaire
     }

@@ -29,6 +29,9 @@ void Donjon::generer() {
         }
     }
     GenerateurDeLabyrinthe::initialiserGrille(*this); // démarrer à la case (1,1)
+    
+    this->poserSortie();           // Place le 'S' en bas à droite
+    this->ajouterEntites(8, 6, 3);    // Place 8 trésors, 6 monstres et 3 pieges
 }
 
 void Donjon::afficher(Aventurier& adv) {
@@ -47,10 +50,34 @@ void Donjon::afficher(Aventurier& adv) {
 
 bool Donjon::estFranchissable(int x, int y) {
     if (x < 0 || x >= largeur || y < 0 || y >= hauteur) return false;
-    return grille[y][x]->afficher() != '#'; 
+   
+    char symbole = grille[y][x]->afficher();
+ 
+    return (symbole == ' ' || symbole == '+' || symbole == 'M' || symbole == 'T' || symbole == 'S');
 }
 
 Case* Donjon::getCase(int x, int y) {
     return grille[y][x];
 }
     
+void Donjon::poserSortie() {
+    set_case(largeur - 2, hauteur - 2, static_cast<Case*>(CaseFactory::creerCase(PORTE)));
+}
+
+void Donjon::ajouterEntites(int nbTresors, int nbMonstres, int nbPieges) {
+    int places = 0;
+    while (places < (nbTresors + nbMonstres + nbPieges)) {
+        int rx = rand() % (largeur - 2) + 1;
+        int ry = rand() % (hauteur - 2) + 1;
+
+        if (getCase(rx, ry)->afficher() == ' ' && (rx != 1 || ry != 1)) {
+            TypeCase type;
+            if (places < nbTresors) type = TRESOR;
+            else if (places < nbTresors + nbMonstres) type = MONSTRE;
+            else type = PIEGE;
+
+            set_case(rx, ry, static_cast<Case*>(CaseFactory::creerCase(type)));
+            places++;
+        }
+    }
+}

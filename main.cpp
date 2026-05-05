@@ -7,18 +7,19 @@
 #include "include/Tresor.hpp"
 #include "include/Monstre.hpp"
 #include "include/Case.hpp"
+#include "include/CaseFactory.hpp"
 
 using namespace std;
     
 
-void resoudreCase(Aventurier& adv, Case* c) {
+void resoudreCase(Aventurier& adv, Case* c, Donjon& d) {
     if (!c) return;
-
     char symbole = c->afficher();
 
     if (symbole == '+') { 
         std::cout << "[!] TRESOR ! Vous le ramassez." << std::endl;
         adv.ajouterTresor();
+        d.set_case(adv.getX(), adv.getY(), static_cast<Case*>(CaseFactory::creerCase(PASSAGE)));
     } 
     else if (symbole == 'T') { 
         std::cout << "[!] CLIC... Un PIEGE ! -15 PV." << std::endl;
@@ -34,6 +35,11 @@ void resoudreCase(Aventurier& adv, Case* c) {
         } else {
             cout << "Vous fuyez prudemment." << endl;
         }
+    }
+    if (symbole == 'S') { 
+        std::cout << "   VICTOIRE ! VOUS ETES SORTI !  " << std::endl;
+        std::cout << "   Tresors recoltes : " << adv.getNbTresors() << std::endl;
+        exit(0);
     }
 }
 
@@ -62,7 +68,7 @@ int main() {
 
         if (monDonjon.estFranchissable(nx, ny)) {
             joueur.deplacer(nx, ny);
-            resoudreCase(joueur, monDonjon.getCase(nx, ny));
+            resoudreCase(joueur, monDonjon.getCase(nx, ny), monDonjon);
         } else {
             cout << "Mur !" << endl;
         }
