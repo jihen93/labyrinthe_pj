@@ -8,13 +8,16 @@
 using namespace std;
 
 void Donjon::set_case(int x, int y, Case* newCase) {
-    delete grille[x][y];
-    grille[x][y] = newCase;
+    if (x >= 0 && x < largeur && y >= 0 && y < hauteur) {
+        delete grille[y][x]; // On supprime l'ancien MUR
+         grille[y][x] = newCase; // On place le nouveau PASSAGE
+    }
 }
 
 void Donjon::set_visite(int x, int y, bool valeur) {
-    //delete visite[x][y];
-    visite[x][y] = valeur;
+if (x >= 0 && x < largeur && y >= 0 && y < hauteur) {
+        visite[y][x] = valeur;
+    }
 }
 
 void Donjon::generer() {

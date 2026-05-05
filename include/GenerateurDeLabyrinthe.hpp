@@ -9,3 +9,4 @@ private :
 
     void placerElements(Donjon &donjon); // Reste à faire
 };
+

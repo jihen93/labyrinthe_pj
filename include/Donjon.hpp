@@ -20,7 +20,7 @@ public :
     int get_hauteur() const {return hauteur;};
     void set_case(int x, int y, Case* newCase);
 
-    bool get_visite(int x, int y) const { return visite[x][y]; }
+    bool get_visite(int x, int y) const { return visite[y][x]; }
     void set_visite(int x, int y, bool valeur);
 
     void poserEntree();
