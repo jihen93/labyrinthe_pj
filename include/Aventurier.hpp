@@ -2,6 +2,8 @@
 #define AVENTURIER_HPP
 
 #include <iostream>
+#include <random>
+#include <ctime>
 
 class Case; // Déclaration anticipée pour resoudreCase
 
@@ -20,6 +22,7 @@ public:
 
     void modifierPV(int delta);
     void ajouterTresor();
+    bool combattreMonstre();
 
     int getPV() const { return pv; }
     int getNbTresors() const { return nbTresors; }

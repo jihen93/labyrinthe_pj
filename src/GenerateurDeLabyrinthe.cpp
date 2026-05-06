@@ -29,11 +29,8 @@ void GenerateurDeLabyrinthe::genererLabyrinthe (Donjon &donjon, int x, int y) { 
     for (int i = 0; i < 4; i++) {
         int nx = x + dir[i][0];
         int ny = y + dir[i][1];
-        //debug
-        cout << "nx: " << nx << ", ny: " << ny << endl;
         
         if (nx > 0 && nx < largeur-1 && ny > 0 && ny < hauteur-1 && !donjon.get_visite(nx,ny)) { // de 1 à 19 ?? (visit(20, 20))
-            cout << "nx_valid: " << nx << ", ny_valid: " << ny << endl;
             // Casser le mur entre (x,y) et (nx,ny)
             donjon.set_case((x + nx) / 2, (y + ny) / 2, static_cast<Case*>(CaseFactory::creerCase(PASSAGE)));
             genererLabyrinthe(donjon, nx, ny); // recursif

@@ -26,14 +26,8 @@ void resoudreCase(Aventurier& adv, Case* c, Donjon& d) {
         adv.modifierPV(-15);
     } 
     else if (symbole == 'M') { 
-        char choix;
-        cout << "[!] MONSTRE ! (c)ombattre ou (f)uir ? ";
-        cin >> choix;
-        if (choix == 'c') {
-            adv.modifierPV(-25); //
-            cout << "Victoire, mais vous etes blesse." << endl;
-        } else {
-            cout << "Vous fuyez prudemment." << endl;
+        if (adv.combattreMonstre()) { // si le montre a été vaincu, la case devient un passage
+            d.set_case(adv.getX(), adv.getY(), static_cast<Case*>(CaseFactory::creerCase(PASSAGE)));
         }
     }
     if (symbole == 'S') { 
@@ -49,9 +43,9 @@ int main() {
     pair<int, int> depart = {1, 1};
     pair<int, int> arrivee = {17, 18};
     vector<pair< int,int>> chemin = monDonjon.trouverChemin(depart, arrivee);
-    cout << chemin.size() << endl;
+    cout << "Chemin optimal" << endl;
     monDonjon.afficher_bfs(chemin);
-    cout << "----------------------" << endl;
+    cout << "----------------------" << endl << endl;
     Aventurier joueur(1, 1);
     char commande;
 
