@@ -61,7 +61,7 @@ Case* Donjon::getCase(int x, int y) {
 }
     
 void Donjon::poserSortie() {
-    set_case(largeur - 2, hauteur - 2, static_cast<Case*>(CaseFactory::creerCase(PORTE)));
+    set_case(17, 18, static_cast<Case*>(CaseFactory::creerCase(PORTE))); 
 }
 
 void Donjon::ajouterEntites(int nbTresors, int nbMonstres, int nbPieges) {
