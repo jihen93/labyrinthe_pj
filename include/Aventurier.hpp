@@ -21,8 +21,9 @@ public:
     void modifierPV(int delta);
     void ajouterTresor();
 
+    int getPV() const { return pv; }
     int getNbTresors() const { return nbTresors; }
-    
+
     int getX() const;
     int getY() const;
 };

@@ -53,6 +53,7 @@ int main() {
     while (joueur.estVivant()) {
         monDonjon.afficher(joueur); 
 
+        cout << "PV: " << joueur.getPV() << " | Tresors: " << joueur.getNbTresors() << endl;
         cout << "\nAction (z:haut, s:bas, q:gauche, d:droite, x:quitter) : ";
         cin >> commande;
 
