@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Case.hpp"
 #include <vector>  
+#include <queue>
 using namespace std;
 
 class Aventurier;
@@ -33,7 +34,9 @@ public :
     ~Donjon(); // vider la memoire
     bool estFranchissable(int x, int y);
     Case* getCase(int x, int y);
-    //vector < pair < int , int > > trouverChemin ( /* ...  */) ;
+    vector<pair< int,int>> trouverChemin(pair< int,int>& depart, pair< int,int>& arrivee) ;
+    vector<pair< int,int>> reconstruireChemin(vector<vector<pair< int,int>>> parent, pair< int,int>& depart, pair< int,int>& arrivee) ;
+    void afficher_bfs(vector<pair<int,int>> chemin);
 };  
 
 /* Affichage ASCII du donjon :

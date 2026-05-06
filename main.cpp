@@ -46,7 +46,12 @@ void resoudreCase(Aventurier& adv, Case* c, Donjon& d) {
 int main() {
     Donjon monDonjon;
     monDonjon.generer();
-    
+    pair<int, int> depart = {1, 1};
+    pair<int, int> arrivee = {17, 18};
+    vector<pair< int,int>> chemin = monDonjon.trouverChemin(depart, arrivee);
+    cout << chemin.size() << endl;
+    monDonjon.afficher_bfs(chemin);
+    cout << "----------------------" << endl;
     Aventurier joueur(1, 1);
     char commande;
 
@@ -75,6 +80,6 @@ int main() {
         }
     }
 
-    if (!joueur.estVivant()) cout << "Mort..." << endl;
+    if (!joueur.estVivant()){ cout << "Mort..." << endl;}
     return 0;
 }
