@@ -27,9 +27,10 @@ public :
     void poserSortie();
     void ajouterEntites(int nbTresors, int nbMonstres, int nbPieges);
 
-    void generer() ;
-    void afficher(Aventurier& adv) ;
+    void generer();
+    void afficher(Aventurier& adv);
 
+    ~Donjon(); // vider la memoire
     bool estFranchissable(int x, int y);
     Case* getCase(int x, int y);
     //vector < pair < int , int > > trouverChemin ( /* ...  */) ;

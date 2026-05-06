@@ -81,3 +81,11 @@ void Donjon::ajouterEntites(int nbTresors, int nbMonstres, int nbPieges) {
         }
     }
 }
+
+Donjon::~Donjon() {
+    for (int i = 0; i < hauteur; i++) {
+        for (int j = 0; j < largeur; j++) {
+            delete grille[i][j]; // Supprime chaque case créée avec new
+        }
+    }
+}
