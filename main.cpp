@@ -12,8 +12,20 @@ using namespace std;
     
 
 int main() {
+    int largeur;
+    int hauteur;
+    do {
+    cout << "Largeur : " ;
+    cin >> largeur;
+    } while(largeur <= 0);
+
+    do{
+    cout << "Hauteur : " ;
+    cin >> hauteur;
+    } while(hauteur <= 0);
+
     Donjon monDonjon;
-    monDonjon.generer(20, 10);
+    monDonjon.generer(largeur, hauteur);
 
     vector<pair< int,int>> chemin = monDonjon.trouverChemin();
     cout << "Chemin optimal" << endl;

@@ -63,10 +63,10 @@ void Donjon::generer(int largeur, int hauteur) {
 
     // Calcul de la sortie (évite les bords pairs pour la compatibilité avec l'algo de génération)
     if (hauteur % 2 == 0) sortie.first = hauteur - 2;
-    else sortie.first = hauteur - 3;
+    else sortie.first = hauteur - 1;
 
     if (largeur % 2 == 0) sortie.second = largeur - 2;
-    else sortie.second = largeur - 3;
+    else sortie.second = largeur - 1;
 
     // Redimensionnement et initialisation par défaut (Murs partout)
     grille.resize(hauteur, vector<Case*>(largeur, nullptr)); 
