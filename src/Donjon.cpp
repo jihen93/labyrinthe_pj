@@ -27,11 +27,11 @@ Case* Donjon::get_case(int x, int y) {
 }
 
 void Donjon::poserEntree() {
-    set_case(1, 1, CaseFactory::creerCase(PORTE_E)); 
+    set_case(0, 0, CaseFactory::creerCase(PORTE_E)); 
 }
 
 void Donjon::poserSortie() {
-    set_case(17, 18, CaseFactory::creerCase(PORTE_S)); 
+    set_case(largeur-1, hauteur-1, CaseFactory::creerCase(PORTE_S)); 
 }
 
 void Donjon::set_visite(int x, int y, bool valeur) {
@@ -44,7 +44,9 @@ bool Donjon::get_visite(int x, int y) const {
     return visite[y][x]; 
 }
 
-void Donjon::generer() {
+void Donjon::generer(int largeur, int hauteur) {
+    this->largeur = largeur;  // Stocke la largeur
+    this->hauteur = hauteur;  // Stocke la hauteur
     grille.resize(hauteur, vector<Case*>(largeur, nullptr)); // obligatoire sinon durant l'execution : Segmentation fault (core dumped)
     visite.resize(hauteur, vector<bool>(largeur, false)); // Initialise à false
     for(int i = 0; i < hauteur; i++) {
@@ -75,7 +77,7 @@ void Donjon::genererLabyrinthe(int x, int y) {
         int nx = x + dir[i][0];
         int ny = y + dir[i][1];
         
-        if (nx > 0 && nx < largeur-1 && ny > 0 && ny < hauteur-1 && !get_visite(nx,ny)) { // de 1 à 19 ?? (visit(20, 20))
+        if (nx >= 0 && nx < largeur-1 && ny >= 0 && ny < hauteur-1 && !get_visite(nx,ny)) { // de 1 à 19 ?? (visit(20, 20))
             // Casser le mur entre (x,y) et (nx,ny)
             set_case((x + nx) / 2, (y + ny) / 2, CaseFactory::creerCase(PASSAGE)); // à vérifier
             genererLabyrinthe(nx, ny); // recursif

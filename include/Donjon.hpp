@@ -14,7 +14,7 @@ class Donjon {
 private:
     vector<vector<Case*>>grille ; 
     vector<vector<bool>> visite; // Tableau dynamique de visite, par déf, on ne connait pas sa taille avant exécution et besoin d'etre initialisé une seule fois
-    int largeur = 20, hauteur = 20;
+    int largeur, hauteur;
 
 public :
     int get_largeur() const;
@@ -32,7 +32,7 @@ public :
     void PlacerElements();
     void genererLabyrinthe(int x, int y);
 
-    void generer();
+    void generer(int largeur, int hauteur);
     void afficher(Aventurier& adv);
 
     ~Donjon(); // vider la memoire
