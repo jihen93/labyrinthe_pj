@@ -15,6 +15,7 @@ private:
     vector<vector<Case*>>grille ; 
     vector<vector<bool>> visite; // Tableau dynamique de visite, par déf, on ne connait pas sa taille avant exécution et besoin d'etre initialisé une seule fois
     int largeur, hauteur;
+    pair<int, int> sortie;
 
 public :
     int get_largeur() const;
@@ -37,7 +38,7 @@ public :
 
     ~Donjon(); // vider la memoire
     bool estFranchissable(int x, int y);
-    vector<pair< int,int>> trouverChemin(pair< int,int>& depart, pair< int,int>& arrivee) ;
+    vector<pair< int,int>> trouverChemin();
     vector<pair< int,int>> reconstruireChemin(vector<vector<pair< int,int>>> parent, pair< int,int>& depart, pair< int,int>& arrivee) ;
     void afficher_bfs(vector<pair<int,int>> chemin);
 };  

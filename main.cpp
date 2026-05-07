@@ -38,14 +38,13 @@ void resoudreCase(Aventurier& adv, Case* c, Donjon& d) {
 
 int main() {
     Donjon monDonjon;
-    monDonjon.generer(20, 20);
-    pair<int, int> depart = {0, 0};
-    pair<int, int> arrivee = {19, 19};
-    vector<pair< int,int>> chemin = monDonjon.trouverChemin(depart, arrivee);
+    monDonjon.generer(21, 21);
+
+    vector<pair< int,int>> chemin = monDonjon.trouverChemin();
     cout << "Chemin optimal" << endl;
     monDonjon.afficher_bfs(chemin);
     cout << "----------------------" << endl << endl;
-    Aventurier joueur(1, 1);
+    Aventurier joueur(0, 0);
     char commande;
 
     while (joueur.estVivant()) {

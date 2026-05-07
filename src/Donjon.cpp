@@ -18,7 +18,7 @@ int Donjon::get_largeur() const {
 void Donjon::set_case(int x, int y, Case* newCase) {
     if (x >= 0 && x < largeur && y >= 0 && y < hauteur) {
         delete grille[y][x]; // On supprime l'ancien MUR
-         grille[y][x] = newCase; // On place le nouveau PASSAGE
+        grille[y][x] = newCase; // On place le nouveau PASSAGE
     }
 }
 
@@ -31,7 +31,7 @@ void Donjon::poserEntree() {
 }
 
 void Donjon::poserSortie() {
-    set_case(largeur-1, hauteur-1, CaseFactory::creerCase(PORTE_S)); 
+    set_case(sortie.first, sortie.second, CaseFactory::creerCase(PORTE_S)); 
 }
 
 void Donjon::set_visite(int x, int y, bool valeur) {
@@ -47,6 +47,14 @@ bool Donjon::get_visite(int x, int y) const {
 void Donjon::generer(int largeur, int hauteur) {
     this->largeur = largeur;  // Stocke la largeur
     this->hauteur = hauteur;  // Stocke la hauteur
+
+    //sortie pas au coin car probleme de labyrinthe
+    if (hauteur % 2 == 0) sortie.first = hauteur - 2;
+    else sortie.first = hauteur - 3;
+
+    if (largeur % 2 == 0) sortie.second = largeur - 2;
+    else sortie.second = largeur - 3;
+
     grille.resize(hauteur, vector<Case*>(largeur, nullptr)); // obligatoire sinon durant l'execution : Segmentation fault (core dumped)
     visite.resize(hauteur, vector<bool>(largeur, false)); // Initialise à false
     for(int i = 0; i < hauteur; i++) {
@@ -54,8 +62,9 @@ void Donjon::generer(int largeur, int hauteur) {
             grille[i][j] = CaseFactory::creerCase(MUR); // static_cast : void* vers case* // initialiser par des murs
         }
     }
-    genererLabyrinthe(1, 1);
+    genererLabyrinthe(0, 0);
     
+
     this->poserSortie();           // Place le 'S' en bas à droite
     this->poserEntree();
     this->PlacerElements();
@@ -86,7 +95,15 @@ void Donjon::genererLabyrinthe(int x, int y) {
 }
 
 void Donjon::afficher(Aventurier& adv) {
+    //premiere ligne
+    cout << "+" ;
+    for (int i = 0; i < hauteur; i++){
+        cout << "-";
+    }
+    cout << "+" << endl;
+
     for (int i = 0; i < hauteur; i++) {
+        cout << "|" ;
         for (int j = 0; j < largeur; j++) {
             // Si les coordonnées correspondent à la position du joueur
             if (adv.getX() == j && adv.getY() == i) {
@@ -95,8 +112,15 @@ void Donjon::afficher(Aventurier& adv) {
                 cout << grille[i][j]->afficher();
             }
         }
-        cout << endl;
+        cout << "|" << endl;
     }
+
+    //derniere ligne
+    cout << "+" ;
+    for (int i = 0; i < hauteur; i++){
+        cout << "-";
+    }
+    cout << "+" << endl;
 }
 
 bool Donjon::estFranchissable(int x, int y) {
@@ -134,7 +158,9 @@ Donjon::~Donjon() {
     }
 }
 
-vector<pair< int,int>> Donjon::trouverChemin(pair< int,int>& depart, pair< int,int>& arrivee) { // vector<pair< int,int>>
+vector<pair< int,int>> Donjon::trouverChemin() { // 
+    pair< int,int> depart = {0,0};
+    pair< int,int> arrivee = sortie;
     // file = file_vide ()
     queue<pair< int,int>> file; 
 
@@ -221,7 +247,14 @@ vector<pair< int,int>> Donjon::reconstruireChemin(vector<vector<pair< int,int>>>
 
 void Donjon::afficher_bfs(vector<pair<int,int>> chemin){
     bool flag;
+    //premiere ligne
+    cout << "+" ;
+    for (int i = 0; i < hauteur; i++){
+        cout << "-";
+    }
+    cout << "+" << endl;
         for (int i = 0; i < hauteur; i++) {
+            cout << "|" ;
             for (int j = 0; j < largeur; j++) {
                 flag = true;
 
@@ -242,7 +275,13 @@ void Donjon::afficher_bfs(vector<pair<int,int>> chemin){
                     }
                 }
             }
-            cout << endl;
+            cout << "|" << endl;
         }
+    //premiere ligne
+    cout << "+" ;
+    for (int i = 0; i < hauteur; i++){
+        cout << "-";
+    }
+    cout << "+" << endl;
 
 }
