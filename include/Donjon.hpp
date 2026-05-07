@@ -17,23 +17,26 @@ private:
     int largeur = 20, hauteur = 20;
 
 public :
-    int get_largeur() const {return largeur;};
-    int get_hauteur() const {return hauteur;};
-    void set_case(int x, int y, Case* newCase);
+    int get_largeur() const;
+    int get_hauteur() const;
 
-    bool get_visite(int x, int y) const { return visite[y][x]; }
+    void set_case(int x, int y, Case* newCase);
+    Case* get_case(int x, int y);
+
+    bool get_visite(int x, int y) const;
     void set_visite(int x, int y, bool valeur);
 
     void poserEntree();
     void poserSortie();
-    void ajouterEntites(int nbTresors, int nbMonstres, int nbPieges);
+
+    void PlacerElements();
+    void genererLabyrinthe(int x, int y);
 
     void generer();
     void afficher(Aventurier& adv);
 
     ~Donjon(); // vider la memoire
     bool estFranchissable(int x, int y);
-    Case* getCase(int x, int y);
     vector<pair< int,int>> trouverChemin(pair< int,int>& depart, pair< int,int>& arrivee) ;
     vector<pair< int,int>> reconstruireChemin(vector<vector<pair< int,int>>> parent, pair< int,int>& depart, pair< int,int>& arrivee) ;
     void afficher_bfs(vector<pair<int,int>> chemin);

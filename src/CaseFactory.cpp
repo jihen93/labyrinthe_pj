@@ -27,13 +27,13 @@ Case* CaseFactory::creerCase(enum TypeCase t) { // creercase retourne donc un po
             Passage* passage = new Passage();
             return passage;
         }
-        /*case SOL: {
-            Sol* sol = new Sol();
-            return sol;
-        }
-        */
-        case PORTE: {
+
+        case PORTE_S: {
             return new Passage('S');
+        }
+
+        case PORTE_E: {
+            return new Passage('E');
         }
 
         default:

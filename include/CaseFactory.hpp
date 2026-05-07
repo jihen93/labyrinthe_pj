@@ -8,7 +8,8 @@ enum TypeCase {
     TRESOR,
     PASSAGE,
     SOL,
-    PORTE
+    PORTE_E,
+    PORTE_S
 };
 
 class CaseFactory {

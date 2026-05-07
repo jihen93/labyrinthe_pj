@@ -1,12 +1,19 @@
 #include <iostream>
 #include "../include/Donjon.hpp"
-#include "../include/GenerateurDeLabyrinthe.hpp"
 #include "../include/CaseFactory.hpp"
 #include "../include/Aventurier.hpp"
 
 #include <vector>
 #include <queue>
 using namespace std;
+
+int Donjon::get_hauteur() const {
+    return hauteur;
+}
+
+int Donjon::get_largeur() const {
+    return largeur;
+}
 
 void Donjon::set_case(int x, int y, Case* newCase) {
     if (x >= 0 && x < largeur && y >= 0 && y < hauteur) {
@@ -15,10 +22,26 @@ void Donjon::set_case(int x, int y, Case* newCase) {
     }
 }
 
+Case* Donjon::get_case(int x, int y) {
+    return grille[y][x];
+}
+
+void Donjon::poserEntree() {
+    set_case(1, 1, CaseFactory::creerCase(PORTE_E)); 
+}
+
+void Donjon::poserSortie() {
+    set_case(17, 18, CaseFactory::creerCase(PORTE_S)); 
+}
+
 void Donjon::set_visite(int x, int y, bool valeur) {
 if (x >= 0 && x < largeur && y >= 0 && y < hauteur) {
         visite[y][x] = valeur;
     }
+}
+
+bool Donjon::get_visite(int x, int y) const {
+    return visite[y][x]; 
 }
 
 void Donjon::generer() {
@@ -29,10 +52,35 @@ void Donjon::generer() {
             grille[i][j] = CaseFactory::creerCase(MUR); // static_cast : void* vers case* // initialiser par des murs
         }
     }
-    GenerateurDeLabyrinthe::initialiserGrille(*this); // démarrer à la case (1,1)
+    genererLabyrinthe(1, 1);
     
     this->poserSortie();           // Place le 'S' en bas à droite
-    this->ajouterEntites(8, 6, 3);    // Place 8 trésors, 6 monstres et 3 pieges
+    this->poserEntree();
+    this->PlacerElements();
+}
+
+void Donjon::genererLabyrinthe(int x, int y) {
+    set_visite(x, y, true);  // Marquer la case actuelle comme visitée // MAIS case (0,0) jamais visité ??
+    set_case(x, y, CaseFactory::creerCase(PASSAGE));
+    int dir[4][2] = {{0, +2}, {0, -2}, {+2, 0}, {-2, 0}}; // Tableau 2D de directions : Nord, Sud, Est, Ouest et on regarde 2 cases en avant
+    
+    // mélange(directions)
+    for (int i = 3; i >= 0; i--) { //selon algo de Fisher-Yates
+        int r = rand() % (i + 1);  // nb aléatoire entre 0 et i
+        swap(dir[i][0], dir[r][0]);
+        swap(dir[i][1], dir[r][1]);
+    }
+
+    for (int i = 0; i < 4; i++) {
+        int nx = x + dir[i][0];
+        int ny = y + dir[i][1];
+        
+        if (nx > 0 && nx < largeur-1 && ny > 0 && ny < hauteur-1 && !get_visite(nx,ny)) { // de 1 à 19 ?? (visit(20, 20))
+            // Casser le mur entre (x,y) et (nx,ny)
+            set_case((x + nx) / 2, (y + ny) / 2, CaseFactory::creerCase(PASSAGE)); // à vérifier
+            genererLabyrinthe(nx, ny); // recursif
+        }
+    }
 }
 
 void Donjon::afficher(Aventurier& adv) {
@@ -57,28 +105,21 @@ bool Donjon::estFranchissable(int x, int y) {
     return (symbole == ' ' || symbole == '+' || symbole == 'M' || symbole == 'T' || symbole == 'S');
 }
 
-Case* Donjon::getCase(int x, int y) {
-    return grille[y][x];
-}
-    
-void Donjon::poserSortie() {
-    set_case(17, 18, static_cast<Case*>(CaseFactory::creerCase(PORTE))); 
-}
-
-void Donjon::ajouterEntites(int nbTresors, int nbMonstres, int nbPieges) {
-    int places = 0;
-    while (places < (nbTresors + nbMonstres + nbPieges)) {
-        int rx = rand() % (largeur - 2) + 1;
-        int ry = rand() % (hauteur - 2) + 1;
-
-        if (getCase(rx, ry)->afficher() == ' ' && (rx != 1 || ry != 1)) {
-            TypeCase type;
-            if (places < nbTresors) type = TRESOR;
-            else if (places < nbTresors + nbMonstres) type = MONSTRE;
-            else type = PIEGE;
-
-            set_case(rx, ry, static_cast<Case*>(CaseFactory::creerCase(type)));
-            places++;
+void Donjon::PlacerElements() {
+    for (int i = 0; i < hauteur; i++) {
+        for (int j = 0; j < largeur; j++) {
+            if (get_case(i, j)->afficher() == ' ') {
+                int r = rand() % 101; // de 0 à 100
+                if (r < 5) {
+                    set_case(i, j, CaseFactory::creerCase(TRESOR));
+                }
+                else if (r < 10) {
+                    set_case(i, j, CaseFactory::creerCase(MONSTRE));
+                }
+                else if (r < 13) {
+                    set_case(i, j, CaseFactory::creerCase(PIEGE));
+                }
+            }
         }
     }
 }
@@ -90,7 +131,6 @@ Donjon::~Donjon() {
         }
     }
 }
-
 
 vector<pair< int,int>> Donjon::trouverChemin(pair< int,int>& depart, pair< int,int>& arrivee) { // vector<pair< int,int>>
     // file = file_vide ()
@@ -202,9 +242,5 @@ void Donjon::afficher_bfs(vector<pair<int,int>> chemin){
             }
             cout << endl;
         }
-
-
-    
-
 
 }

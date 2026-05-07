@@ -2,7 +2,6 @@
 #include <utility> // Pas oublier, sinon le main ne renvoie rien !
 #include "include/Donjon.hpp"
 #include "include/Aventurier.hpp"
-#include "include/GenerateurDeLabyrinthe.hpp"
 #include "include/Mur.hpp"
 #include "include/Tresor.hpp"
 #include "include/Monstre.hpp"
@@ -68,7 +67,7 @@ int main() {
 
         if (monDonjon.estFranchissable(nx, ny)) {
             joueur.deplacer(nx, ny);
-            resoudreCase(joueur, monDonjon.getCase(nx, ny), monDonjon);
+            resoudreCase(joueur, monDonjon.get_case(nx, ny), monDonjon);
         } else {
             cout << "Mur !" << endl;
         }
