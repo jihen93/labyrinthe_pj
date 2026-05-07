@@ -37,6 +37,8 @@ public :
     void afficher(Aventurier& adv);
 
     ~Donjon(); // vider la memoire
+
+    void resoudreCase(Aventurier& adv, Case* c);
     bool estFranchissable(int x, int y);
     vector<pair< int,int>> trouverChemin();
     vector<pair< int,int>> reconstruireChemin(vector<vector<pair< int,int>>> parent, pair< int,int>& depart, pair< int,int>& arrivee) ;

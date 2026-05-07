@@ -11,34 +11,9 @@
 using namespace std;
     
 
-void resoudreCase(Aventurier& adv, Case* c, Donjon& d) {
-    if (!c) return;
-    char symbole = c->afficher();
-
-    if (symbole == '+') { 
-        std::cout << "[!] TRESOR ! Vous le ramassez." << std::endl;
-        adv.ajouterTresor();
-        d.set_case(adv.getX(), adv.getY(), static_cast<Case*>(CaseFactory::creerCase(PASSAGE)));
-    } 
-    else if (symbole == 'T') { 
-        std::cout << "[!] CLIC... Un PIEGE ! -15 PV." << std::endl;
-        adv.modifierPV(-15);
-    } 
-    else if (symbole == 'M') { 
-        if (adv.combattreMonstre()) { // si le montre a été vaincu, la case devient un passage
-            d.set_case(adv.getX(), adv.getY(), static_cast<Case*>(CaseFactory::creerCase(PASSAGE)));
-        }
-    }
-    if (symbole == 'S') { 
-        std::cout << "   VICTOIRE ! VOUS ETES SORTI !  " << std::endl;
-        std::cout << "   Tresors recoltes : " << adv.getNbTresors() << std::endl;
-        exit(0);
-    }
-}
-
 int main() {
     Donjon monDonjon;
-    monDonjon.generer(21, 21);
+    monDonjon.generer(20, 10);
 
     vector<pair< int,int>> chemin = monDonjon.trouverChemin();
     cout << "Chemin optimal" << endl;
@@ -66,7 +41,7 @@ int main() {
 
         if (monDonjon.estFranchissable(nx, ny)) {
             joueur.deplacer(nx, ny);
-            resoudreCase(joueur, monDonjon.get_case(nx, ny), monDonjon);
+            monDonjon.resoudreCase(joueur, monDonjon.get_case(nx, ny));
         } else {
             cout << "Mur !" << endl;
         }
